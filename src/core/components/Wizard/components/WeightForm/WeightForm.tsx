@@ -1,10 +1,67 @@
 import React from "react";
-import { Container } from "./WeightForm.styles";
+import { Formik, Form } from "formik";
 
-type PropsType = {};
+import { WizardContextType } from "../../Wizard";
+import { TextInput, FormNavButtons } from "../";
 
-const WeightForm = ({}: PropsType) => {
-  return <Container></Container>;
+import schema from "./validation";
+
+import { Container, Title, FullLine, SharedLine } from "./WeightForm.styles";
+
+type PropsType = {
+  shippingData: WizardContextType;
+  step: number;
+  setFormStep: (arg0: number) => void;
+  totalSteps: number;
+  setWizardContext: any;
+};
+
+const WeightForm = ({
+  step,
+  setFormStep,
+  totalSteps,
+  shippingData,
+  setWizardContext,
+}: PropsType) => {
+  return (
+    <Container>
+      <Title>Enter the receivers address:</Title>
+      <Formik
+        initialValues={{
+          weight: shippingData.weight,
+        }}
+        validationSchema={schema}
+        onSubmit={async (values, { setSubmitting }) => {
+          console.log("=> submitted:", values);
+          setSubmitting(false);
+        }}
+      >
+        {({ validateForm, values }) => (
+          <Form>
+            <FullLine>
+              <TextInput
+                fullLine={true}
+                label="Weight"
+                name="weight"
+                type="number"
+                placeholder={shippingData.weight}
+              />
+            </FullLine>
+
+            <FormNavButtons
+              step={step}
+              setFormStep={setFormStep}
+              totalSteps={totalSteps}
+              validateForm={validateForm}
+              setWizardContext={setWizardContext}
+              values={values.weight}
+              wizardContextTarget="weight"
+            />
+          </Form>
+        )}
+      </Formik>
+    </Container>
+  );
 };
 
 export default WeightForm;

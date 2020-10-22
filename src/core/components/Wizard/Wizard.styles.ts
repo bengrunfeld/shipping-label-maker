@@ -9,6 +9,10 @@ export const Container = styled.section`
     margin-bottom: 2rem;
   }
 
+  > :last-child {
+    margin-bottom: 0;
+  }
+
   @media screen and (min-width: ${({ theme }) => theme.size.desktop}) {
     width: ${({ theme }) => theme.size.contentWidth};
   }

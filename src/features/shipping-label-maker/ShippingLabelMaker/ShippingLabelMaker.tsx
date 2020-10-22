@@ -33,26 +33,26 @@ const ShippingLabelMaker = () => {
 
   const reducer = (state: WizardContextType, action: ActionType) => {
     if (action.type === "from") {
-      const newState = Object.assign({}, wizardContext, {
+      const newState = Object.assign({}, state, {
         from: action.payload,
       });
       return newState;
     }
 
     if (action.type === "to") {
-      const newState = Object.assign({}, wizardContext, { to: action.payload });
+      const newState = Object.assign({}, state, { to: action.payload });
       return newState;
     }
 
     if (action.type === "weight") {
-      const newState = Object.assign({}, wizardContext, {
+      const newState = Object.assign({}, state, {
         weight: action.payload,
       });
       return newState;
     }
 
     if (action.type === "shippingOption") {
-      const newState = Object.assign({}, wizardContext, {
+      const newState = Object.assign({}, state, {
         shippingOption: action.payload,
       });
       return newState;

@@ -23,8 +23,13 @@ const FormNavButtons = ({
   return (
     <Container role="navigation">
       <NavButton
-        type="button"
+        type="submit"
         onClick={() => {
+          setWizardContext({
+            type: wizardContextTarget,
+            payload: values,
+          });
+
           if (step - 1 < 0) return;
           setFormStep(step - 1);
         }}
@@ -37,8 +42,6 @@ const FormNavButtons = ({
           const result = await validateForm();
           const numErrors = Object.keys(result).length;
           if (numErrors > 0) return;
-
-          console.log(values);
 
           setWizardContext({
             type: wizardContextTarget,

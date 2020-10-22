@@ -47,7 +47,16 @@ const ShippingForm = ({
           setWizardContext={setWizardContext}
         />
       );
-    if (step === 2) return <WeightForm />;
+    if (step === 2)
+      return (
+        <WeightForm
+          step={step}
+          setFormStep={setFormStep}
+          totalSteps={totalSteps}
+          shippingData={shippingData}
+          setWizardContext={setWizardContext}
+        />
+      );
     if (step === 3) return <ShippingOptionForm />;
     if (step === 4) return <ConfirmForm />;
   };
