@@ -80,9 +80,6 @@ const ShippingLabelMaker = () => {
     console.log("==>>> On Complete");
   };
 
-  console.log("==>> STATE:");
-  console.log(state);
-
   return (
     <Container>
       <Wizard

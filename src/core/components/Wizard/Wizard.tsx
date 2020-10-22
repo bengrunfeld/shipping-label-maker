@@ -63,6 +63,7 @@ const Wizard = ({
         shippingData={wizardContext}
         totalSteps={totalSteps}
         setWizardContext={setWizardContext}
+        onComplete={onComplete}
       />
     </Container>
   );

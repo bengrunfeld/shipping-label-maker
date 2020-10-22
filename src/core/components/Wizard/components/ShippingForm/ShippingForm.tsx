@@ -17,14 +17,16 @@ type PropsType = {
   setFormStep: (arg0: number) => void;
   totalSteps: number;
   setWizardContext: any;
+  onComplete: () => void;
 };
 
 const ShippingForm = ({
+  onComplete,
+  setFormStep,
+  setWizardContext,
   shippingData,
   step,
-  setFormStep,
   totalSteps,
-  setWizardContext,
 }: PropsType) => {
   const getForm = (step: number): React.ReactNode => {
     if (step === 0)
@@ -57,8 +59,27 @@ const ShippingForm = ({
           setWizardContext={setWizardContext}
         />
       );
-    if (step === 3) return <ShippingOptionForm />;
-    if (step === 4) return <ConfirmForm />;
+    if (step === 3)
+      return (
+        <ShippingOptionForm
+          step={step}
+          setFormStep={setFormStep}
+          totalSteps={totalSteps}
+          shippingData={shippingData}
+          setWizardContext={setWizardContext}
+        />
+      );
+    if (step === 4)
+      return (
+        <ConfirmForm
+          step={step}
+          setFormStep={setFormStep}
+          totalSteps={totalSteps}
+          shippingData={shippingData}
+          setWizardContext={setWizardContext}
+          onComplete={onComplete}
+        />
+      );
   };
 
   return <Container>{getForm(step)}</Container>;

@@ -13,13 +13,3 @@ export const Title = styled.h2`
 export const FullLine = styled.div`
   padding: 1rem 0;
 `;
-
-export const SharedLine = styled.div`
-  padding: 1rem 0;
-  display: flex;
-  justify-content: space-between;
-
-  > * {
-    padding: 0 1rem 0 0;
-  }
-`;

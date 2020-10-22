@@ -5,18 +5,20 @@ type PropsType = {
   step: number;
   setFormStep: (arg0: number) => void;
   totalSteps: number;
-  validateForm: any;
+  validateForm?: any;
   setWizardContext: any;
-  values: any;
-  wizardContextTarget: string;
+  values?: any;
+  wizardContextTarget?: string;
+  onComplete?: () => void;
 };
 
 const FormNavButtons = ({
-  totalSteps,
-  step,
+  onComplete,
   setFormStep,
-  validateForm,
   setWizardContext,
+  step,
+  totalSteps,
+  validateForm,
   values,
   wizardContextTarget,
 }: PropsType) => {
@@ -25,10 +27,11 @@ const FormNavButtons = ({
       <NavButton
         type="submit"
         onClick={() => {
-          setWizardContext({
-            type: wizardContextTarget,
-            payload: values,
-          });
+          if (step !== totalSteps)
+            setWizardContext({
+              type: wizardContextTarget,
+              payload: values,
+            });
 
           if (step - 1 < 0) return;
           setFormStep(step - 1);
@@ -36,24 +39,42 @@ const FormNavButtons = ({
       >
         Previous
       </NavButton>
-      <NavButton
-        type="submit"
-        onClick={async () => {
-          const result = await validateForm();
-          const numErrors = Object.keys(result).length;
-          if (numErrors > 0) return;
 
-          setWizardContext({
-            type: wizardContextTarget,
-            payload: values,
-          });
+      {step !== totalSteps && (
+        <NavButton
+          type="submit"
+          onClick={async () => {
+            const result = await validateForm();
+            const numErrors = Object.keys(result).length;
+            if (numErrors > 0) return;
 
-          if (step + 1 > totalSteps) return;
-          setFormStep(step + 1);
-        }}
-      >
-        Next
-      </NavButton>
+            setWizardContext({
+              type: wizardContextTarget,
+              payload: values,
+            });
+
+            if (step + 1 > totalSteps) return;
+            setFormStep(step + 1);
+          }}
+        >
+          Next
+        </NavButton>
+      )}
+
+      {step === totalSteps && (
+        <NavButton
+          confirm={true}
+          onClick={async () => {
+            // As per instructions, call onComplete on Confirm
+            if (onComplete) {
+              onComplete();
+            }
+            alert("Form submitted. onComplete called.");
+          }}
+        >
+          Confirm
+        </NavButton>
+      )}
     </Container>
   );
 };

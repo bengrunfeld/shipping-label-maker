@@ -10,9 +10,14 @@ export const Container = styled.nav`
   }
 `;
 
-export const NavButton = styled.button`
+type NavButtonType = {
+  confirm?: boolean;
+};
+
+export const NavButton = styled.button<NavButtonType>`
   border: none;
-  background: ${({ theme }) => theme.colors.darkGray};
+  background: ${({ theme, confirm }) =>
+    confirm ? theme.colors.blue : theme.colors.darkGray};
   color: ${({ theme }) => theme.colors.white};
   padding: 1rem 2rem;
   font-family: "Open Sans", sans-serif;

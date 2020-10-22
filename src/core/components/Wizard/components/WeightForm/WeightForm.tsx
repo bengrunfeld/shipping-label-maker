@@ -6,7 +6,7 @@ import { TextInput, FormNavButtons } from "../";
 
 import schema from "./validation";
 
-import { Container, Title, FullLine, SharedLine } from "./WeightForm.styles";
+import { Container, Title, FullLine } from "./WeightForm.styles";
 
 type PropsType = {
   shippingData: WizardContextType;
@@ -25,7 +25,7 @@ const WeightForm = ({
 }: PropsType) => {
   return (
     <Container>
-      <Title>Enter the receivers address:</Title>
+      <Title>Enter the shipping weight:</Title>
       <Formik
         initialValues={{
           weight: shippingData.weight,
