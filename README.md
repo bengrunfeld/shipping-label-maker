@@ -1,68 +1,114 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Shipping Label Maker
 
-## Available Scripts
+This app contains a Wizard that enables a User to fill out of form. Please see the app specification for implementation details.
 
-In the project directory, you can run:
+## Installation
 
-### `yarn start`
+Once you've placed this folder in your file system somewhere, run:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    yarn
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Usage
 
-### `yarn test`
+To run this project and view in browser, use:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    yarn start
 
-### `yarn build`
+If you don't get immediately redirected to the browser, navigate to `localhost:3000`..
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To run tests, use:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+    yarn test
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+If for some reason you need to create a production build of the app, use:
 
-### `yarn eject`
+    yarn build
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Note to the test writers
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 1. The Component Header
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Several elements of this assignments raised questions, and unfortunately I found them somewhat confusing.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The first issue was that of the Header. The header is initally described as a simple component title that does not change between different steps, but in the `propTypes`, it is defined as a function, rather than a text field.
 
-## Learn More
+No explanation of what this `header` function should do is provided, so I'm assuming that function is a typo and in fact it's just text.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 2. Multiple Issues with Steps
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The top level `propTypes` defines `steps` as an array, but then a further `propTypes` declaration of `steps` shows that it is in fact and `object`. Furthermore, `steps` declares `wizardContext` as a property, even though `wizardContext` was already defined at the top level props.
 
-### Code Splitting
+This would mean that `wizardContext` is defined in two separate places, which I believe is not good coding practice (Single Source of Truth).
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Maybe this is a test to see if a job applicant picks up on these issues, but if so, it's not ideal, since the applicant doesn't have a tech person to ask for clarification, so I'm guessing that these are likely mistakes.
 
-### Analyzing the Bundle Size
+### 3. Inconsistent Naming Conventions
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+In step 2 of the Exercise Instructions, it says the following:
 
-### Making a Progressive Web App
+> rename all files/folders to lower case (with dashes if
+> needed) to follow our file naming conventions.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+In step 4 though, the instructions tell us to use PascalCase
 
-### Advanced Configuration
+> This is where you will create the
+> ShippingLabelMaker component as well as the steps and the ShippingLabel component.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+So which naming convention should we use?
 
-### Deployment
+Please let me know if I misunderstood these issues.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+### Regarding an Auth Component
 
-### `yarn build` fails to minify
+The bonus section asks us to create a login screen which uses some type of authentication. If it's just a "Enter your password" text field which then does a string comparison against a stored value, then it's fine, but that doesn't require any knowledge about industry-quality authentication.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Of course, we could store the password in local storage or a cookie, but both of these are completely insecure.
+
+Authentication is a complex process that generally utilizes a server, and since this is a front-end only application, I can't do that.
+
+Although I'm not a security expert by any means, here is a very simple approach to writing your own Auth module, which I completely do not recommend. Auth should be taken care of by a 3rd-party specialized service which is well-known and trusted by industry.
+
+1. Send an encrypted version of the username and password to the server
+2. On the server, compare the hashed username and password to the corresponding values stored in the database, which are also encrypted
+3. If there is a match, return the Session ID to the client and store it in a cookie with HttpOnly set to true
+4. For all server requests and other Auth purposes, use this cookie value as an auth token of sorts
+5. For each request, check that the session attached to the session ID stored in the cookie is still valid. If it isn't, then reject the request and inform the User that they need to log in again.
+6. Make sure that after a certain amount of time or some other criteria, you expire the session and delete it. Stale sessions lying around could be taken advantage of by hackers.
+
+## Tech Stack Used
+
+I've implemented the following tech for this assignment since I believe that it's the best fit for the job.
+
+-   Styled Components - helps me write more semantic and modular JSX & CSS
+-   TypeScript - catches type-related developer-caused bugs
+-   Jest - unit testing
+
+## Exercise Instuctions
+
+[x] - Create a blank project called `shipping-label-maker` using `create-react-app`
+
+[x] - Remove all components except App. Clean up the render method of App.js so that you have a blank screen. In the src folder, rename all files/folders to lower case (with dashes if needed) to follow our file naming conventions.
+
+[x] - Create a folder called `core/components/wizard`. This is where you will create the Wizard component. The core folder is intended for reusable components.
+
+[x] - Create a folder called `features/shipping-label-maker`. This is where you will create the `ShippingLabelMaker` component as well as the steps and the `ShippingLabel` component. The feature folder is intended for implementing application specific features.
+
+[] - Implement the basic Wizard component so that it can accept some steps and react to prev, next and end actions from the steps. Don’t worry about styling or passing wizardContext at this time.
+
+[] - Implement passing of the wizardContext and filling the sender’s address using the first step.
+
+[] - Implement the remaining steps based on the wireframe provided. You should be able to fill in how the remaining steps look.
+
+[] - [Bonus] Beautify your UI using raw CSS or any UI library of your choice.
+
+[] - [Bonus] Add meaningful validations to your steps.
+
+[] - [Bonus] Write the following tests using your favorite testing framework:
+a. Wizard moves backwards and forwards based on actions sent by steps.
+b. Wizard calls onComplete() of the parent when a step sends the end action.
+c. Shipping Label maker prints the shipping label when onComplete() is called.
+d. Shipping cost is printed correctly as specified by the formula above.
+
+[] - [Bonus] Create a login screen that will authenticate the user using a username and password. The wizard should be shown only after successful authentication. Build the authentication as a Higher-Order Component.
+
+[] - Update the README.md file to tell us anything special about your solution. This will help us evaluate your solution in the best light.
