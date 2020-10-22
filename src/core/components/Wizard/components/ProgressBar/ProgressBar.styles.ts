@@ -23,7 +23,7 @@ export const Progress = styled.div<ProgressType>`
   align-items: center;
 
   width: ${({ percent }) => percent}%;
-  transition: width 2s;
+  transition: width 0.5s;
 
   background-image: linear-gradient(
     -45deg,

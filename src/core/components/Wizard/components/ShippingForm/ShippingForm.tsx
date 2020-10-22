@@ -1,15 +1,58 @@
 import React from "react";
-import { Container } from "./ShippingForm.styles";
+
 import { WizardContextType } from "../../Wizard";
+import {
+  SenderAddressForm,
+  ReceiverAddressForm,
+  WeightForm,
+  ShippingOptionForm,
+  ConfirmForm,
+} from "../";
+
+import { Container } from "./ShippingForm.styles";
 
 type PropsType = {
   shippingData: WizardContextType;
   step: number;
-  setStep: React.Dispatch<React.SetStateAction<any>>;
+  setFormStep: (arg0: number) => void;
+  totalSteps: number;
+  setWizardContext: any;
 };
 
-const ShippingForm = ({ shippingData, step, setStep }: PropsType) => {
-  return <Container></Container>;
+const ShippingForm = ({
+  shippingData,
+  step,
+  setFormStep,
+  totalSteps,
+  setWizardContext,
+}: PropsType) => {
+  const getForm = (step: number): React.ReactNode => {
+    if (step === 0)
+      return (
+        <SenderAddressForm
+          step={step}
+          setFormStep={setFormStep}
+          totalSteps={totalSteps}
+          shippingData={shippingData}
+          setWizardContext={setWizardContext}
+        />
+      );
+    if (step === 1)
+      return (
+        <ReceiverAddressForm
+          step={step}
+          setFormStep={setFormStep}
+          totalSteps={totalSteps}
+          shippingData={shippingData}
+          setWizardContext={setWizardContext}
+        />
+      );
+    if (step === 2) return <WeightForm />;
+    if (step === 3) return <ShippingOptionForm />;
+    if (step === 4) return <ConfirmForm />;
+  };
+
+  return <Container>{getForm(step)}</Container>;
 };
 
 export default ShippingForm;

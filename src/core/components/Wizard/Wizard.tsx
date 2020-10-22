@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Container, Title } from "./Wizard.styles";
-import { Bar, ShippingForm } from "./components";
+import { ProgressBar, ShippingForm } from "./components";
 
 export type PersonalDetailsType = {
   name: string;
@@ -34,20 +34,35 @@ export type WizardType = {
   steps: StepsType;
   wizardContext: WizardContextType;
   onComplete: () => void;
+  setWizardContext: any;
 };
 
-const Wizard = ({ header, steps, wizardContext, onComplete }: WizardType) => {
+const Wizard = ({
+  header,
+  steps,
+  wizardContext,
+  onComplete,
+  setWizardContext,
+}: WizardType) => {
   const [percentComplete, setPercentComplete] = useState(0);
   const [step, setStep] = useState(0);
+  const totalSteps = 4;
+
+  const setFormStep = (latestStep: number): void => {
+    setPercentComplete(Math.floor((latestStep / totalSteps) * 100));
+    setStep(latestStep);
+  };
 
   return (
     <Container>
       <Title>{header}</Title>
-      <Bar percent={percentComplete} />
+      <ProgressBar percent={percentComplete} />
       <ShippingForm
         step={step}
-        setStep={setStep}
+        setFormStep={setFormStep}
         shippingData={wizardContext}
+        totalSteps={totalSteps}
+        setWizardContext={setWizardContext}
       />
     </Container>
   );

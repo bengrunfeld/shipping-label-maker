@@ -3,10 +3,10 @@ const theme = {
     black: "#000",
     cobaltBlue: "#6960EC",
     darkGray: "#3e3e3e",
-    borderGray: "#727878",
     errorRed: "#e53e3e",
     footerGray: "#434242",
     gray: "#727878",
+    activeGray: "#a3a3a3",
     white: "#fff",
   },
   size: {

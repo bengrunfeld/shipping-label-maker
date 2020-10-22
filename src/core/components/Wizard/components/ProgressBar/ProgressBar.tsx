@@ -1,11 +1,11 @@
 import React from "react";
-import { Container, Progress, Text } from "./Bar.styles";
+import { Container, Progress, Text } from "./ProgressBar.styles";
 
 type PropsType = {
   percent: number;
 };
 
-const Bar = ({ percent }: PropsType) => (
+const ProgressBar = ({ percent }: PropsType) => (
   <Container>
     <Progress percent={percent}>
       <Text>{percent > 0 ? `${percent}%` : ""}</Text>
@@ -13,4 +13,4 @@ const Bar = ({ percent }: PropsType) => (
   </Container>
 );
 
-export default Bar;
+export default ProgressBar;
