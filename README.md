@@ -6,23 +6,23 @@ This app contains a Wizard that enables a User to fill out of form. Please see t
 
 Once you've placed this folder in your file system somewhere, run:
 
-    yarn
+    npm install
 
 ## Usage
 
 To run this project and view in browser, use:
 
-    yarn start
+    npm start
 
 If you don't get immediately redirected to the browser, navigate to `localhost:3000`..
 
 To run tests, use:
 
-    yarn test
+    npm test
 
 If for some reason you need to create a production build of the app, use:
 
-    yarn build
+    npm build
 
 ## Note to the test writers
 
@@ -79,9 +79,11 @@ Although I'm not a security expert by any means, here is a very simple approach 
 
 I've implemented the following tech for this assignment since I believe that it's the best fit for the job.
 
--   Styled Components - helps me write more semantic and modular JSX & CSS
--   TypeScript - catches type-related developer-caused bugs
+-   TypeScript - catches many type-related developer-caused bugs
+-   Styled Components - helps write more semantic and modular JSX & CSS
 -   Jest - unit testing
+-   Formik - simple but thorough way on implementing forms in React
+-   Yup - provides excellent validation for Formik forms
 
 ## Exercise Instuctions
 
@@ -93,15 +95,15 @@ I've implemented the following tech for this assignment since I believe that it'
 
 [x] - Create a folder called `features/shipping-label-maker`. This is where you will create the `ShippingLabelMaker` component as well as the steps and the `ShippingLabel` component. The feature folder is intended for implementing application specific features.
 
-[] - Implement the basic Wizard component so that it can accept some steps and react to prev, next and end actions from the steps. Don’t worry about styling or passing wizardContext at this time.
+[x] - Implement the basic Wizard component so that it can accept some steps and react to prev, next and end actions from the steps. Don’t worry about styling or passing wizardContext at this time.
 
-[] - Implement passing of the wizardContext and filling the sender’s address using the first step.
+[x] - Implement passing of the wizardContext and filling the sender’s address using the first step.
 
-[] - Implement the remaining steps based on the wireframe provided. You should be able to fill in how the remaining steps look.
+[x] - Implement the remaining steps based on the wireframe provided. You should be able to fill in how the remaining steps look.
 
-[] - [Bonus] Beautify your UI using raw CSS or any UI library of your choice.
+[x] - [Bonus] Beautify your UI using raw CSS or any UI library of your choice.
 
-[] - [Bonus] Add meaningful validations to your steps.
+[x] - [Bonus] Add meaningful validations to your steps.
 
 [] - [Bonus] Write the following tests using your favorite testing framework:
 a. Wizard moves backwards and forwards based on actions sent by steps.
@@ -111,4 +113,24 @@ d. Shipping cost is printed correctly as specified by the formula above.
 
 [] - [Bonus] Create a login screen that will authenticate the user using a username and password. The wizard should be shown only after successful authentication. Build the authentication as a Higher-Order Component.
 
-[] - Update the README.md file to tell us anything special about your solution. This will help us evaluate your solution in the best light.
+[x] - Update the README.md file to tell us anything special about your solution. This will help us evaluate your solution in the best light.
+
+## About My Solution
+
+### TypeScript
+
+As you can tell from the code, I wrote the app in Typescript because I believe it makes development easier, as you don't spend time needlessly looking for type-based errors that you've made
+
+### Formik
+
+Forms in React can be annoying. You have to consider getting values from state into the form, validation, error messages, and submission actions. Formik makes much of this process easier.
+
+### Unit Testing
+
+I chose to only test `calcShippingCost` due to time constraints. Since I'd manually tested all the other elements, I felt that this was the functionality that needed testing the most.
+
+Hope you like my project.
+
+Regards,
+
+Ben
